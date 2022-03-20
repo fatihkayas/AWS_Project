@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: |
+  This template launches an EC2 instance to deploy web app by using CFN.
+
+Resources:
+  CFNInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0a8b4cd432b1c3063
+      InstanceType: t2.micro
+      KeyName: firstkey
+      SecurityGroups: 
+        - dark
+      Tags:
+        - Key: Name
+          Value: Cfn-Instance
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo yum update -y
+          sudo yum install httpd -y
+          sudo yum -get install wget 
+          cd /var/www/html
+          wget https://raw.githubusercontent.com/fatihkayas/AWS_Project/main/kittens-carousel-static/static-web/index.html
+          wget https://raw.githubusercontent.com/fatihkayas/AWS_Project/main/kittens-carousel-static/static-web/cat0.jpg
+          wget https://raw.githubusercontent.com/fatihkayas/AWS_Project/main/kittens-carousel-static/static-web/cat1.jpg
+          wget https://raw.githubusercontent.com/fatihkayas/AWS_Project/main/kittens-carousel-static/static-web/cat1.jpg
+          wget https://raw.githubusercontent.com/fatihkayas/AWS_Project/main/kittens-carousel-static/static-web/cat3.png
+          systemctl enable httpd
+          systemctl start httpd     
+
+Outputs:
+  URL:
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - CFNInstance
+          - PublicIp
+    Description: Newly created application URL
+  

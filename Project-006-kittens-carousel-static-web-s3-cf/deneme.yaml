@@ -1,0 +1,156 @@
+LogicalID:
+  Type: AWS::S3::Bucket
+  Properties:
+    AccelerateConfiguration:
+      AccelerationStatus: "String"
+    AccessControl: "String"
+    AnalyticsConfigurations:
+      AnalyticsConfigurations
+    BucketEncryption:
+      ServerSideEncryptionConfiguration:
+        -
+    BucketName: "String"
+    CorsConfiguration:
+      CorsRules:
+        -
+    IntelligentTieringConfigurations:
+      IntelligentTieringConfigurations
+    InventoryConfigurations:
+      InventoryConfigurations
+    LifecycleConfiguration:
+      Rules:
+        -
+    LoggingConfiguration:
+      DestinationBucketName: "String"
+      LogFilePrefix: "String"
+    MetricsConfigurations:
+      MetricsConfigurations
+    NotificationConfiguration:
+      LambdaConfigurations:
+        -
+      QueueConfigurations:
+        -
+      TopicConfigurations:
+        -
+    ObjectLockConfiguration:
+      ObjectLockEnabled: "String"
+    ObjectLockEnabled: false
+    OwnershipControls:
+      Rules:
+        -
+    PublicAccessBlockConfiguration:
+      BlockPublicAcls: false
+      BlockPublicPolicy: false
+      IgnorePublicAcls: false
+      RestrictPublicBuckets: false
+    ReplicationConfiguration:
+      Role: "false"
+      Rules:
+        -
+    Tags:
+      Tags
+    VersioningConfiguration:
+      Status: "false"
+    WebsiteConfiguration:
+      ErrorDocument: "String"
+      IndexDocument: "String"
+      RoutingRules:
+        -
+
+
+
+
+
+        LogicalID:
+          Type: AWS::CertificateManager::Certificate
+          Properties:
+            CertificateAuthorityArn: "String"
+            CertificateTransparencyLoggingPreference: "String"
+            DomainName: "String" # Required
+            DomainValidationOptions:
+              DomainValidationOptions
+            SubjectAlternativeNames:
+              SubjectAlternativeNames
+            Tags:
+              Tags
+            ValidationMethod: "String"
+
+
+
+            kittenscloudfront:
+              Type: AWS::CloudFront::Distribution
+              Properties:
+                DistributionConfig:
+                  Aliases:
+                    -
+                  CNAMEs:
+                    -
+                  CacheBehaviors:
+                    -
+                  Comment: "String"
+                  CustomErrorResponses:
+                    -
+                  DefaultRootObject: "String"
+                  Enabled: false
+                  HttpVersion: "String"
+                  IPV6Enabled: false
+                  Origins:
+                    -
+                  PriceClass: "String"
+                  WebACLId: "String"
+                Tags:
+                  Tags
+
+KittensCloudFront:
+  Type: AWS::CloudFront::Distribution
+  Properties:
+    DistributionConfig:
+      Aliases:
+      - !Ref KittensDomainName
+      comment: Cloudfront Distribution pointing to Kittens S3 Bucket
+
+      DefaaultCacheBehavior:
+      AllowedMethods:
+      - GET
+      - HEAD
+      Compress: true
+      ForwardedValues:
+      Querystring: true
+      Cookies:
+        Forward: none
+      TargetOriginId: KittenOrigin
+      viewerProtocolPolicy: redirect-to-https
+
+       DefaultRootObject: index.html
+        Enabled: true
+        HttpVersion: 'http2'
+        Origins: 
+        - DomainName: !Select [2, !Split ["/", !GetAtt KittensBucket.WebsiteURL]] 
+          Id: KittensOrigin
+
+
+LogicalID:
+  Type: AWS::Route53::RecordSet
+  Properties:
+    AliasTarget:
+      DNSName: "String"
+      EvaluateTargetHealth: false
+      HostedZoneId: "String"
+    Comment: "false"
+    Failover: "String"
+    GeoLocation:
+      ContinentCode: "String"
+      CountryCode: "String"
+      SubdivisionCode: "String"
+    HealthCheckId: "String"
+    HostedZoneId: "String"
+    HostedZoneName: "String"
+    MultiValueAnswer: false
+    Name: "String" # Required
+    Region: "String"
+    ResourceRecords:
+      ResourceRecords
+    SetIdentifier: "String"
+    TTL: "String"
+    Type: "String" # Required
+    Weight: Number

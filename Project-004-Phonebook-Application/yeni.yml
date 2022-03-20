@@ -1,0 +1,130 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  The Phonebook Application ai ms to create a phonebook application in Python and deployed as a web application with Flask on AWS Application Load Balancer with Auto Scaling Group of Elastic Compute Cloud (EC2) Instances and Relational Database Service (RDS) using AWS Cloudformation Service.
+Parameters:
+Parameters:
+  myVPC:
+    Description: Select your VPC
+    Type: AWS::EC2::VPC::Id
+  mySubnets:
+    Description: Select at least 2 subnets
+    Type: List<AWS::EC2::Subnet::Id>
+  myKP:
+    Description: Select your Key
+    Type: AWS::EC2::KeyPair::KeyName
+  myIT:
+    Description: Select instance type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+     - t2.micro
+     - t3.micro
+     - t2.nano
+     - t3.nano
+Mappings:
+  RegionImageMap:
+    us-east-1:
+      AMI: ami-0dc2d3e4c0f9ebd18
+    us-east-2:
+      AMI: ami-0233c2d874b811deb
+    us-west-1:
+      AMI: ami-0ed05376b59b90e46
+    us-west-2:
+      AMI: ami-0dc8f589abe99f538
+    eu-west-1:
+      AMI: ami-058b1b7fe545997ae
+
+
+Send a message to mentoring-group-india
+
+
+
+
+
+
+
+
+
+  
+Resources:
+  WebServerSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP for Flask Web Server and Ssh for entering to EC2
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+           FromPort: 22
+           ToPort: 22
+           CidrIp: 0.0.0.0/0
+         - IpProtocol: tcp
+           FromPort: 80
+           ToPort: 80
+           SourceSecurityGroupId: !GetAtt 
+           ALBSecurityGroup.GroupId
+      VpcId: !Ref myVPC
+
+      
+      WebServerSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP for Flask Web Server and Ssh for entering to EC2
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+           FromPort: 22
+           ToPort: 22
+           CidrIp: 0.0.0.0/0
+         - IpProtocol: tcp
+           FromPort: 80
+           ToPort: 80
+           SourceSecurityGroupId: !GetAtt 
+           ALBSG
+      VpcId: !Ref myVPC
+      target
+      LogicalID:
+        Type: AWS::AutoScaling::AutoScalingGroup
+        Properties:
+          AutoScalingGroupName: "String"
+          AvailabilityZones:
+            AvailabilityZones
+          CapacityRebalance: false
+          Context: "String"
+          Cooldown: "String"
+          DesiredCapacity: "String"
+          DesiredCapacityType: "String"
+          HealthCheckGracePeriod: Number
+          HealthCheckType: "String"
+          InstanceId: "String"
+          LaunchConfigurationName: "String"
+          LaunchTemplate:
+            LaunchTemplateId: "String"
+            LaunchTemplateName: "String"
+            Version: "String"
+          LifecycleHookSpecificationList:
+            LifecycleHookSpecificationList
+          LoadBalancerNames:
+            LoadBalancerNames
+          MaxInstanceLifetime: Number
+          MaxSize: "String" # Required
+          MetricsCollection:
+            MetricsCollection
+          MinSize: "String" # Required
+          MixedInstancesPolicy:
+          NewInstancesProtectedFromScaleIn: false
+          NotificationConfigurations:
+            NotificationConfigurations
+          PlacementGroup: "String"
+          ServiceLinkedRoleARN: "String"
+          Tags:
+            Tags
+          TargetGroupARNs:
+            TargetGroupARNs
+          TerminationPolicies:
+            TerminationPolicies
+          VPCZoneIdentifier:
+            VPCZoneIdentifier
+  
+
+
+
+  autoscal
+Outputs:
